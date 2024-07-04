@@ -1,4 +1,4 @@
-const myDB = require('../db').query
+const {query:myDB} = require('../db')
 
 
 //get all label
@@ -16,8 +16,8 @@ const getSingleLabel = async(req,res)=>{
 
 // Add New label
 const addLabel = async(req,res)=>{
-    const {id, labelName,photoUrl} = req.body;
-    const result = await myDB(`INSERT INTO label (id,labelName,photoUrl) VALUES(?,?,?) `,[id,labelName,photoUrl]);
+    const {labelName,photoUrl} = req.body;
+    const result = await myDB(`INSERT INTO label (labelName,photoUrl) VALUES(?,?) `,[labelName,photoUrl]);
     res.send(result);
 }
 
