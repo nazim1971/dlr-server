@@ -4,6 +4,7 @@ const labelTable = async () => {
     const sql = `
         CREATE TABLE IF NOT EXISTS label (
             id INT AUTO_INCREMENT PRIMARY KEY,
+            userEmail TEXT,
             labelName TEXT,
             photoUrl TEXT
         )

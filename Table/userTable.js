@@ -5,7 +5,9 @@ const userTable = async () => {
         CREATE TABLE IF NOT EXISTS user (
             id INT AUTO_INCREMENT PRIMARY KEY,
             userName TEXT,
+            userEmail TEXT,
             password TEXT,
+            token TEXT DEFAULT NULL,
             role TEXT DEFAULT 'user'
         )
     `;

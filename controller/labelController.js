@@ -16,8 +16,8 @@ const getSingleLabel = async(req,res)=>{
 
 // Add New label
 const addLabel = async(req,res)=>{
-    const {labelName,photoUrl} = req.body;
-    const result = await myDB(`INSERT INTO label (labelName,photoUrl) VALUES(?,?) `,[labelName,photoUrl]);
+    const {labelName,photoUrl,userEmail} = req.body;
+    const result = await myDB(`INSERT INTO label (labelName,photoUrl,userEmail) VALUES(?,?,?) `,[labelName,photoUrl,userEmail]);
     res.send(result);
 }
 

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -10,14 +11,37 @@ const port = process.env.PORT || 8080;
 
 //config
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
 
-//MiddleWire
-app.post('/jwt',async(req,res)=>{
-    const user = req.body;
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{expiresIn: '365d'});
-    res.send({token});
-  })
+app.use(cors(
+    {
+      origin: ["http://localhost:5173"],
+      methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
+      credentials: true,
+      optionSuccessStatus: 200,  
+    }
+));
+
+
+// verify jwt middlewire
+
+const verifyUser = (req,res,next) =>{
+  const token = req.cookies.token;
+  if(!token){
+    return res.json({Error: "You are not authenticated"})
+  }
+  else{
+    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,decoded)=>{
+     if(err){
+      return res.json({Error: "Token is not Correct"})
+     }
+     else{
+      req.userEmail = decoded.userEmail;
+      next();
+     }
+    })
+  }
+}
 
 //all table
 const {labelTable} = require('./Table/labelTable');
@@ -41,13 +65,14 @@ initializeDatabase();
 //label
 app.use('/v1/label', require('./route/labelRoute'))
 // All User 
-app.use('/v01/user', require('./route/userRouter'))
-
-
+app.use('/v1/user', require('./route/userRouter'))
+// All Artist
+app.use('/v1/artist', require('./route/artistRoute.js'))
 
 //start
 app.get('/',(req,res) =>{
     res.send('Node Mysql are running')
+    return res.json({Status: "Success", userEmail: req.userEmail})
     })
     
     app.listen(port, (err)=>{
@@ -57,4 +82,3 @@ app.get('/',(req,res) =>{
         console.log(`Server is running at PORT %d:`,port);
     })
     
-

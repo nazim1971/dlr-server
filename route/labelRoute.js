@@ -2,6 +2,7 @@ const express = require('express');
 const { getAllLabels, addLabel, deleteLabel, updateLabel, getSingleLabel } = require('../controller/labelController');
 
 
+
 // router object
 const router = express.Router();
 
