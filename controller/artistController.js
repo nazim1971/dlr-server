@@ -1,11 +1,13 @@
 const {query:myDB} = require('../db')
 
 
-//get all artist
+//get all artist by email
 const getAllArtist = async(req,res)=>{
-    const result = await myDB("SELECT * FROM artist");
+    const email = req.params.email;
+    const result = await myDB("SELECT * FROM artist WHERE userEmail=?",[email]);
     res.json(result);
 }
+
 
 // get single artist by id
 const getSingleArtist = async(req,res)=>{
@@ -17,7 +19,7 @@ const getSingleArtist = async(req,res)=>{
 // Add New artist
 const addArtist = async(req,res)=>{
     const {artistName,photoUrl,userEmail,artistEmail} = req.body;
-    const result = await myDB(`INSERT INTO artist (artistName,photoUrl,userEmail,artistEmail) VALUES(?,?,?,) `,[artistName,photoUrl,userEmail,artistEmail]);
+    const result = await myDB(`INSERT INTO artist (artistName,photoUrl,userEmail,artistEmail) VALUES(?,?,?,?) `,[artistName,photoUrl,userEmail,artistEmail]);
     res.send(result);
 }
 
@@ -31,8 +33,8 @@ const deleteArtist = async(req,res)=>{
 //Update data by id
 const updateArtist = async(req,res)=>{
    const id = req.params.id;
-   const {artistName,photoUrl,artistEmail} = req.body;
-   const result = await myDB("UPDATE artist SET artistName=?, photoUrl=?, artistEmail=? WHERE id=?",[artistName,photoUrl,artistEmail,id]);
+   const {artistName,photoUrl,artistEmail,userEmail} = req.body;
+   const result = await myDB("UPDATE artist SET artistName=?, photoUrl=?, artistEmail=?, userEmail=? WHERE id=?",[artistName,photoUrl,artistEmail,userEmail,id]);
    res.send(result)
 }
 

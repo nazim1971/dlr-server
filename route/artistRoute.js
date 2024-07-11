@@ -6,7 +6,7 @@ const router = express.Router();
 
 // All Artist routes
 
-router.get('/allArtist', getAllArtist);
+router.get('/allArtist/:email', getAllArtist);
 
 router.post('/addArtist', addArtist);
 

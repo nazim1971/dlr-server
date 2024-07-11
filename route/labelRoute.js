@@ -9,7 +9,7 @@ const router = express.Router();
 
 // All label routes
 
-router.get('/allLabel', getAllLabels);
+router.get('/allLabel/:email', getAllLabels);
 
 router.post('/addLabel', addLabel);
 

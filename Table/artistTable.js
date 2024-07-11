@@ -5,6 +5,8 @@ const artistTable = async ()=>{
         CREATE TABLE IF NOT EXISTS artist (
             id INT AUTO_INCREMENT PRIMARY KEY,
             artistName TEXT,
+            artistEmail TEXT,
+            userEmail TEXT,
             photoUrl TEXT
         )
     `;

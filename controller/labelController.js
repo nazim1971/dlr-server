@@ -3,7 +3,8 @@ const {query:myDB} = require('../db')
 
 //get all label
 const getAllLabels = async(req,res)=>{
-    const result = await myDB("SELECT * FROM label");
+    const email = req.params.email;
+    const result = await myDB("SELECT * FROM label WHERE userEmail=?",[email]);
     res.json(result);
 }
 
@@ -14,7 +15,7 @@ const getSingleLabel = async(req,res)=>{
  res.send(result)
 }
 
-// Add New label
+// Add New label by email
 const addLabel = async(req,res)=>{
     const {labelName,photoUrl,userEmail} = req.body;
     const result = await myDB(`INSERT INTO label (labelName,photoUrl,userEmail) VALUES(?,?,?) `,[labelName,photoUrl,userEmail]);

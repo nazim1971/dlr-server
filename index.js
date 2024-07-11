@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 app.use(cors(
     {
-      origin: ["http://localhost:5173"],
+      origin: ["http://localhost:5173","https://cms.darklabrecords.com","https://668eb0db8276fc1119e1b4d3--sensational-frangollo-f33808.netlify.app"],
       methods: ["POST", "GET", "DELETE", "PUT", "PATCH"],
       credentials: true,
       optionSuccessStatus: 200,  
@@ -67,7 +67,7 @@ app.use('/v1/label', require('./route/labelRoute'))
 // All User 
 app.use('/v1/user', require('./route/userRouter'))
 // All Artist
-app.use('/v1/artist', require('./route/artistRoute.js'))
+app.use('/v1/artist', require('./route/artistRoute'))
 
 //start
 app.get('/',(req,res) =>{
